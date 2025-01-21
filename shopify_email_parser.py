@@ -189,4 +189,4 @@ def check_hostinger_email():
 # Run the email check function
 while True:
     check_hostinger_email()
-    time.sleep(1)
+    time.sleep(60)
