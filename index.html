@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Shopify Orders</h1>
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Order ID</th>
+                    <th>Timestamp</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="ordersBody">
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadOrders() {
+            try {
+                const response = await fetch("shopify_orders.json");
+                const orders = await response.json();
+                const tableBody = document.getElementById("ordersBody");
+                
+                // Clear existing table rows
+                tableBody.innerHTML = "";
+
+                orders.forEach(order => {
+                    const row = `<tr>
+                        <td>${order.customer_name || "N/A"}</td>
+                        <td>${order.order_id || "N/A"}</td>
+                        <td>${order.timestamp || "N/A"}</td>
+                        <td>${order.customer_address || "N/A"}</td>
+                        <td>${order.customer_email || "N/A"}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error loading orders:", error);
+            }
+        }
+
+        // Load orders when the page loads
+        window.onload = loadOrders;
+	setInterval(loadOrders, 1000); // Reload every 10 seconds
+    </script>
+
+</body>
+</html>
+

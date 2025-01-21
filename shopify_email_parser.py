@@ -147,6 +147,8 @@ def check_hostinger_email():
                     if order_details:
                         all_orders.append(order_details)
 
+                    mail.store(mail_id, "+FLAGS", "\\Seen")
+
 #        with open('shopify_orders.json', 'a', encoding='utf-8') as json_file:
 #            json.dump(all_orders, json_file, indent=4, ensure_ascii=False)
 
@@ -165,8 +167,10 @@ def check_hostinger_email():
         
         existing_orders.extend(all_orders)  # Merge lists
         
-        with open(json_filename, 'w', encoding='utf-8') as json_file:
-            json.dump(existing_orders, json_file, indent=4, ensure_ascii=False)
+        if all_orders:
+            with open(json_filename, 'w', encoding='utf-8') as json_file:
+                json.dump(existing_orders, json_file, indent=4, ensure_ascii=False)
+            all_orders.clear()
 
 
 
@@ -185,4 +189,4 @@ def check_hostinger_email():
 # Run the email check function
 while True:
     check_hostinger_email()
-    time.sleep(60)
+    time.sleep(1)
