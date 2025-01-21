@@ -29,7 +29,7 @@
     <script>
         async function loadOrders() {
             try {
-                const response = await fetch("shopify_orders.json");
+                const response = await fetch(`shopify_orders.json?t=${new Date().getTime()}`); // Prevent caching
                 const orders = await response.json();
                 const tableBody = document.getElementById("ordersBody");
                 
@@ -53,9 +53,8 @@
 
         // Load orders when the page loads
         window.onload = loadOrders;
-	setInterval(loadOrders, 10000); // Reload every 10 seconds
+        setInterval(loadOrders, 10000); // Reload every 10 seconds
     </script>
 
 </body>
 </html>
-
